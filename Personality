@@ -1,0 +1,29 @@
+public class Personality
+{
+    private String type;
+    private String compare1;
+	private String compare2;
+	
+	
+	Personality (String aType, String comp1, String comp2)
+	{
+		type = aType;
+		compare1 = comp1;
+		compare2 = comp2;
+	}
+	
+	public String getType()
+	{
+		return type;
+	}
+	
+	public String getComp1()
+	{
+		return compare1;
+	}
+	
+	public String getComp2()
+	{
+		return compare2;
+	}
+}
