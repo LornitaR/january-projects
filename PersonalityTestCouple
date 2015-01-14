@@ -1,0 +1,221 @@
+import javax.swing.JOptionPane;
+import java.io.*;
+public class PersonalityTestCouple
+{
+    public static void main (String [] args) throws IOException
+    {
+    	
+		Personality [] comparisons = new Personality[16];
+		comparisons [0] = new Personality ("ISTJ", "ESFP", "ESTP");
+		comparisons [1] = new Personality ("ESTJ", "ISTP", "INTP");
+		comparisons [2] = new Personality ("ISFJ", "ESTP", "ESFP");
+		comparisons [3] = new Personality ("ESFJ", "ISFP", "INFP");
+		comparisons [4] = new Personality ("ISTP", "ESTJ", "ENTJ");
+		comparisons [5] = new Personality ("ESTP", "ISFJ", "ISTJ");
+		comparisons [6] = new Personality ("ISFP", "ESFJ", "ENFJ");
+		comparisons [7] = new Personality ("ESFP", "ISTJ", "ISFJ");
+		comparisons [8] = new Personality ("INTP", "ENTJ", "ESTJ");
+		comparisons [9] = new Personality ("ENTP", "INFJ", "INTJ");
+		comparisons [10] = new Personality ("INFJ", "ENTP", "ENFP");
+		comparisons [11] = new Personality ("ENFJ", "INFP", "ISFP");
+		comparisons [12] = new Personality ("INFP", "ENFJ", "ESFJ");
+		comparisons [13] = new Personality ("ENFP", "INFJ", "INTJ");
+		comparisons [14] = new Personality ("INTJ", "ENFP", "ENTP");
+		comparisons [15] = new Personality ("ENTJ", "INTP", "ISTP");
+
+		Person person1 = new Person();
+		Person person2 = new Person();
+		String name1 = JOptionPane.showInputDialog(null,"Please enter first name of partner 1:");
+		person1.setName(name1);
+		String type1 = getPersonalityType(person1);
+		person1.setResult(type1);
+		String name2 = JOptionPane.showInputDialog(null, "Please enter first name of partner 2:");
+		person2.setName(name2);
+		String type2 = getPersonalityType(person2);
+		person2.setResult(type2);
+		boolean compatible = false;
+		compatible = checkCompatible(person1, person2, comparisons);
+		if(compatible)
+		{
+			JOptionPane.showMessageDialog(null,person1.getName() + " of type " + person1.getResult() + " is compatible with "  + person2.getName() + " of type " + person2.getResult(), "Congratulations!", 1);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null,person1.getName() + " of type " + person1.getResult() +  " is not compatible with " + person2.getName() + " of type " + person2.getResult(), "Hard luck!", 0);
+		}
+		//WritePersonalityRecord(name, type);
+	}
+	
+	public static String getPersonalityType(Person couple)
+	{
+		Object[] options = {"Yes", "No"};
+		
+		String type;
+		int ans;
+		ans = JOptionPane.showOptionDialog(null, "Do you know your Meyer Brigg personality type?","Myer Briggs " +
+											"Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+		if (ans == 0)
+		{
+			type = JOptionPane.showInputDialog(null,"Please enter type:");
+			type = type.toUpperCase();
+		}
+		else
+		{
+			type = DetermineType();
+		}
+		return type;
+	}
+	
+		
+		public static boolean checkCompatible(Person person1, Person person2, Personality [] comp)
+		{
+			boolean compatible = false;
+			for (int i =0; i <= comp.length-1;)
+			{
+				if ((person1.getResult()).equals(comp[i].getType()))
+				{
+					if((person2.getResult()).equals(comp[i].getComp1()))
+					{
+						compatible = true;
+						i++;
+					}
+					else if((person2.getResult()).equals(comp[i].getComp2()))
+					{
+						compatible = true;
+						i++;
+					}
+					else
+					{
+						compatible = false;
+						i++;
+					
+					}
+				}
+				else
+				{
+					i++;
+				}
+			}
+			
+			return compatible;
+		}
+		
+		
+		public static String DetermineType()
+		{	
+			int E=0, I=0, S=0, N=0, T=0, F=0, J=0, P=0, ans; //Counters
+			String type = "", type1 = "E", type2 = "S", type3 = "T", type4 = "J";	//Types are switched if the test detects the opposite trait.
+			Object[] options = {"True","False"};
+			
+			//Decide whether the user in Extroverted or Introverted
+			ans = JOptionPane.showOptionDialog(null, "You need to have \"alone time\" after " + 
+												"\nspending some time talking to other people.", "Myer Briggs " +
+												"Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) I++;
+			else if (ans == 1) E++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You take time to think before you act.", 
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION, 
+												 JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) I++;
+			else if (ans == 1) E++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You tend to motivate yourself rather than be motivated\n" +
+												"by the outside world of people and things.", 
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION, 
+												 JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) I++;
+			else if (ans == 1) E++;
+			if (I > E) type1 = "I";
+			
+			
+			//Decide whether the user in Sensing or Intuitive
+			ans = JOptionPane.showOptionDialog(null, "You're comfortable with ambiguous\ndata and with guessing its meaning.",
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) N++;
+			else if (ans == 1) S++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You like routine.", "Myer Briggs Personality Test", 
+												JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+												null, options, options[1]);
+			if (ans == 0) S++;
+			else if (ans == 1) N++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You prefer a theoretical over a practical approach.", 
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION, 
+												 JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) N++;
+			else if (ans == 1) S++;
+			if (N > S) type2 = "N";
+			
+			
+			//Decide whether the user in Feeling or Thinking
+			ans = JOptionPane.showOptionDialog(null, "You are naturally sensitive to people needs and reactions.",
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) F++;
+			else if (ans == 1) T++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You trust reason rather than feelings.", "Myer Briggs Personality Test", 
+												JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+												null, options, options[1]);
+			if (ans == 0) T++;
+			else if (ans == 1) F++;
+			
+			ans = JOptionPane.showOptionDialog(null, "Your actions are frequently influenced by emotions.", 
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION, 
+												 JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) F++;
+			else if (ans == 1) T++;
+			if (F > T) type3 = "F";
+			
+			
+			//Decide whether the user in Judging or Perceiving
+			ans = JOptionPane.showOptionDialog(null, "You value justice higher than mercy.",
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,
+												JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) J++;
+			else if (ans == 1) P++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You are inclined to rely more on improvisation \n" +
+												"than on prior planning.", "Myer Briggs Personality Test", 
+												JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+												null, options, options[1]);
+			if (ans == 0) P++;
+			else if (ans == 1) J++;
+			
+			ans = JOptionPane.showOptionDialog(null, "You tend to instinctively avoid commitments which\n" +
+												"interfere with flexibility, freedom and variety.", 
+												"Myer Briggs Personality Test", JOptionPane.YES_NO_CANCEL_OPTION, 
+												 JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+			if (ans == 0) P++;
+			else if (ans == 1) J++;
+			if (P > J) type4 = "P";
+			
+			type = type1 + type2 + type3 + type4;
+			JOptionPane.showMessageDialog(null, "Your type is: " + type);
+			return type;
+		}
+		
+		/*public static void WritePersonalityRecord(String name, String type)
+		{
+			PrintWriter MBTIRecords = null;
+			try
+			{	
+				MBTIRecords = new PrintWriter(new FileOutputStream("MBTI.txt"));
+			}
+			catch (FileNotFoundException e)
+			{
+				System.out.println("Error opening the file MBTI.txt. " + e.getMessage());
+				System.exit(0);
+			}
+			MBTIRecords.println(name + ", " + type);
+			MBTIRecords.close();
+			System.out.println("Record written to MBTI.txt.");
+		}*/	
+	
+			
+		
+}
