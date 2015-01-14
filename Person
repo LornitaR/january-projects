@@ -1,0 +1,28 @@
+public class Person
+{
+    private String name;
+	private String mbResult;
+	
+		
+	public void setName(String aName)
+	{
+		name = aName;
+	}
+	
+	public String getName()
+	{
+		return name;
+	}
+	
+	public void setResult(String aResult)
+	{
+		mbResult = aResult;
+	}
+	
+	public String getResult()
+	{
+		return mbResult;
+	}
+	
+
+}
