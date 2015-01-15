@@ -52,7 +52,7 @@ public class PersonalityTestCouple
 		
 		String type;
 		int ans;
-		ans = JOptionPane.showOptionDialog(null, "Do you know your Meyer Brigg personality type?","Myer Briggs " +
+		ans = JOptionPane.showOptionDialog(null, "Do you know your Myer Brigg personality type?","Myer Briggs " +
 											"Personality Test", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
 		if (ans == 0)
 		{
@@ -103,7 +103,7 @@ public class PersonalityTestCouple
 		
 		public static String DetermineType()
 		{	
-			int E=0, I=0, S=0, N=0, T=0, F=0, J=0, P=0, ans; //Counters
+			int E=0, I=0, S=0, N=0, T=0, F=0, J=0, P=0, ans; 			//Counters
 			String type = "", type1 = "E", type2 = "S", type3 = "T", type4 = "J";	//Types are switched if the test detects the opposite trait.
 			Object[] options = {"True","False"};
 			
